@@ -36,57 +36,59 @@ exports.showriddlebyid = function (req, res) {
 //menambahkan riddle
 exports.addriddle = function (req, res) {
     var id_user_author = req.body.id_user_author;
+    var title = req.body.title;
     var riddle_text = req.body.riddle_text;
     var riddle_answer = req.body.riddle_answer;
     var date = req.body.date;
 
     connection.query(
-        'INSERT INTO riddle_table (id_user_author,riddle_text,riddle_answer,date) VALUES(?,?,?,?)',
-        [id_user_author,riddle_text,riddle_answer,date],
+        'INSERT INTO riddle_table (id_user_author,title,riddle_text,riddle_answer,date) VALUES(?,?,?,?,?)',
+        [id_user_author,title,riddle_text,riddle_answer,date],
         function (error, rows, fields) {
             if (error) {
                 console.log(error);
             } else {
-                response.ok('Berhasil menambahkan data!', res);
+                response.ok('Berhasil menambahkan riddle!', res);
             }
         }
     );
 };
 
-// //Mengubah data berdasarkan id
-// exports.ubahmahasiswa = function (req, res) {
-//     var id = req.body.id_mahasiswa;
-//     var nim = req.body.nim;
-//     var nama = req.body.nama;
-//     var jurusan = req.body.jurusan;
+//Edit riddle
+exports.editriddle = function (req, res) {
+    var id_riddle = req.body.id_riddle;
+    var title = req.body.title;
+    var riddle_text = req.body.riddle_text;
+    var riddle_answer = req.body.riddle_answer;
+    var date = req.body.date;
 
-//     connection.query(
-//         'UPDATE mahasiswa SET nim = ?, nama = ?, jurusan = ? WHERE id_mahasiswa = ?',
-//         [nim, nama, jurusan, id],
-//         function (error, rows, fields) {
-//             if (error) {
-//                 console.log(error);
-//             } else {
-//                 response.ok("Berhasil mengubah data", res);
-//             }
-//         }
-//     );
-// };
+    connection.query(
+        'UPDATE riddle_table SET title = ?, riddle_text = ?, riddle_answer = ?, date = ? WHERE id_riddle = ?',
+        [title, riddle_text, riddle_answer, date, id_riddle],
+        function (error, rows, fields) {
+            if (error) {
+                console.log(error);
+            } else {
+                response.ok("Berhasil mengubah riddle", res);
+            }
+        }
+    );
+};
 
-// //menghapus data berdasarkan id
-// exports.hapusmahasiswa = function(req,res){
-//     var id = req.body.id_mahasiswa;
+//menghapus data berdasarkan id
+exports.deleteriddle = function(req,res){
+    var id_riddle = req.body.id_riddle;
 
-//     connection.query('DELETE FROM mahasiswa WHERE id_mahasiswa=?', [id],
-//         function (error, rows, fields) {
-//             if (error) {
-//                 console.log(error);
-//             } else {
-//                 response.ok("Berhasil menghapus data", res);
-//             }
-//         }
-//     );
-// };
+    connection.query('DELETE FROM riddle_table WHERE id_riddle=?', [id_riddle],
+        function (error, rows, fields) {
+            if (error) {
+                console.log(error);
+            } else {
+                response.ok("Berhasil menghapus riddle", res);
+            }
+        }
+    );
+};
 
 // //menampilkan matakuliah group
 // exports.tampilgroupmatakuliah = function(req,res){

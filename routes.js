@@ -17,11 +17,11 @@ module.exports = function(app){
     app.route('/add-riddle')
         .post(jsonku.addriddle);
     
-    // app.route('/ubah')
-    //     .post(jsonku.ubahmahasiswa);
+    app.route('/edit-riddle')
+        .post(jsonku.editriddle);
 
-    // app.route('/hapus')
-    //     .delete(jsonku.hapusmahasiswa);
+    app.route('/delete-riddle')
+        .post(jsonku.deleteriddle);
 
     // app.route('/tampilmatakuliah')
     //     .post(jsonku.tampilgroupmatakuliah);
