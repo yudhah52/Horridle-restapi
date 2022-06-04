@@ -8,6 +8,9 @@ module.exports = function(app){
     app.route('/')
         .post(jsonku.index);
 
+    app.route('/get-user-detail')
+        .post(jsonku.userdetail);
+
     app.route('/get-all-riddle')
         .post(jsonku.showallriddle);
 
@@ -22,6 +25,18 @@ module.exports = function(app){
 
     app.route('/delete-riddle')
         .post(jsonku.deleteriddle);
+
+    app.route('/get-user-riddles')
+        .post(jsonku.userriddles);
+
+    app.route('/comment-riddle')
+        .post(jsonku.commentriddle);
+    
+    app.route('/delete-comment')
+        .post(jsonku.deletecomment);
+        
+    app.route('/get-riddle-comments')
+        .post(jsonku.riddlecomments);
 
     // app.route('/tampilmatakuliah')
     //     .post(jsonku.tampilgroupmatakuliah);

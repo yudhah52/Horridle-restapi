@@ -75,7 +75,7 @@ exports.editriddle = function (req, res) {
     );
 };
 
-//menghapus data berdasarkan id
+//menghapus riddle berdasarkan id
 exports.deleteriddle = function(req,res){
     var id_riddle = req.body.id_riddle;
 
@@ -89,6 +89,86 @@ exports.deleteriddle = function(req,res){
         }
     );
 };
+
+//menampilkan detail user
+exports.userdetail = function (req, res) {
+    var id_user = req.body.id_user;
+    connection.query('SELECT *FROM user_table WHERE id_user = ?', [id_user],
+        function (error, rows, fields) {
+            if (error) {
+                console.log(error);
+            } else {
+                response.ok(rows, res);
+            }
+        }
+    );
+}
+
+//menampilkan user riddles
+exports.userriddles = function (req, res) {
+    var id_user_author = req.body.id_user_author;
+    connection.query('SELECT *FROM riddle_table WHERE id_user_author = ?', [id_user_author],
+        function (error, rows, fields) {
+            if (error) {
+                console.log(error);
+            } else {
+                response.ok(rows, res);
+            }
+        }
+    );
+}
+
+//menambahkan comment
+exports.commentriddle = function (req, res) {
+    var id_riddle = req.body.id_riddle;
+    var id_user = req.body.id_user;
+    var comment = req.body.comment;
+    var date = req.body.date;
+
+    connection.query(
+        'INSERT INTO comment_table (id_riddle,id_user,comment,date) VALUES(?,?,?,?)',
+        [id_riddle,id_user,comment,date],
+        function (error, rows, fields) {
+            if (error) {
+                console.log(error);
+            } else {
+                response.ok('Berhasil menambahkan comment!', res);
+            }
+        }
+    );
+}
+
+//menghapus comment
+exports.deletecomment = function (req, res) {
+    var id_comment = req.body.id_comment;
+
+    connection.query(
+        'DELETE FROM comment_table WHERE id_comment=?', 
+        [id_comment],
+        function (error, rows, fields) {
+            if (error) {
+                console.log(error);
+            } else {
+                response.ok("Berhasil menghapus comment", res);
+            }
+        }
+    );
+}
+
+//menampilkan semua comment
+exports.riddlecomments = function (req, res) {
+    var id_riddle = req.body.id_riddle;
+
+    connection.query('SELECT *FROM comment_table WHERE id_riddle = ?', [id_riddle],
+        function (error, rows, fields) {
+            if (error) {
+                console.log(error);
+            } else {
+                response.ok(rows, res);
+            }
+        }
+    );
+}
 
 // //menampilkan matakuliah group
 // exports.tampilgroupmatakuliah = function(req,res){
