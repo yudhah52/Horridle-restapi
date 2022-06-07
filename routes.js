@@ -38,6 +38,9 @@ module.exports = function(app){
     app.route('/get-riddle-comments')
         .post(jsonku.riddlecomments);
 
+    app.route('/edit-profile')
+        .post(jsonku.editprofile);
+
     // app.route('/tampilmatakuliah')
     //     .post(jsonku.tampilgroupmatakuliah);
 };

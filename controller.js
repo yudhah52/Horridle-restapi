@@ -173,6 +173,27 @@ exports.riddlecomments = function (req, res) {
     );
 }
 
+
+// edit profile
+exports.editprofile = function(req, res) {
+    var id_user = req.body.id_user;
+    var name = req.body.name;
+    var img_profile = req.body.img_profile;
+    var email = req.body.email;
+    // var username = req.body.username;
+    var password = req.body.password;
+
+    connection.query('UPDATE user_table SET name=?, img_profile=?, email=?, password=? WHERE id_user=?',
+    [name, img_profile, email, password, id_user],
+        function(error, rows, fields){
+            if(error){
+                console.log(error);
+            }else{
+                response.ok("Berhasil Ubah data", res);
+            }
+        });
+}
+
 // //menampilkan matakuliah group
 // exports.tampilgroupmatakuliah = function(req,res){
 //     connection.query('SELECT mahasiswa.id_mahasiswa, mahasiswa.nim, mahasiswa.nama, mahasiswa.jurusan, matakuliah.matakuliah, matakuliah.sks FROM krs JOIN matakuliah JOIN mahasiswa WHERE krs.id_matakuliah = matakuliah.id_matakuliah AND krs.id_mahasiswa = mahasiswa.id_mahasiswa ORDER BY mahasiswa.id_mahasiswa;',
