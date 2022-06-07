@@ -38,11 +38,14 @@ exports.showriddlebyid = function (req, res) {
 
 //menambahkan riddle
 exports.addriddle = function (req, res) {
+    var now = new Date();
+    var today = now.getDate()+"/"+(now.getMonth()+1)+"/"+now.getFullYear();
+
     var id_user_author = req.body.id_user_author;
     var title = req.body.title;
     var riddle_text = req.body.riddle_text;
     var riddle_answer = req.body.riddle_answer;
-    var date = req.body.date;
+    var date = today;
 
     connection.query(
         'INSERT INTO riddle_table (id_user_author,title,riddle_text,riddle_answer,date) VALUES(?,?,?,?,?)',
@@ -59,11 +62,14 @@ exports.addriddle = function (req, res) {
 
 //Edit riddle
 exports.editriddle = function (req, res) {
+    var now = new Date();
+    var today = now.getDate()+"/"+(now.getMonth()+1)+"/"+now.getFullYear();
+
     var id_riddle = req.body.id_riddle;
     var title = req.body.title;
     var riddle_text = req.body.riddle_text;
     var riddle_answer = req.body.riddle_answer;
-    var date = req.body.date;
+    var date = today;
 
     connection.query(
         'UPDATE riddle_table SET title = ?, riddle_text = ?, riddle_answer = ?, date = ? WHERE id_riddle = ?',
@@ -123,6 +129,9 @@ exports.userriddles = function (req, res) {
 
 //menambahkan comment
 exports.commentriddle = function (req, res) {
+    var now = new Date();
+    var today = now.getDate()+"/"+(now.getMonth()+1)+"/"+now.getFullYear();
+    
     var id_riddle = req.body.id_riddle;
     var id_user = req.body.id_user;
     var comment = req.body.comment;
