@@ -10,13 +10,16 @@ exports.index = function (req, res) {
 
 //menampilkan semua riddle dan diurut berdasarkan tanggal
 exports.showallriddle = function (req, res) {
-    connection.query('SELECT *FROM riddle_table ORDER BY date DESC', function (error, rows, fields) {
-        if (error) {
-            connection.log(error);
-        } else {
-            response.ok(rows, res);
+    connection.query(
+        'SELECT user_table.id_user, user_table.name, riddle_table.id_riddle, riddle_table.title, riddle_table.riddle_text FROM user_table JOIN riddle_table WHERE user_table.id_user=riddle_table.id_user_author ORDER BY riddle_table.date;', 
+        function (error, rows, fields) {
+            if (error) {
+                connection.log(error);
+            } else {
+                response.ok(rows, res);
+            }
         }
-    });
+    );
 }
 
 //menampilkan detail riddle berdasarkan id
