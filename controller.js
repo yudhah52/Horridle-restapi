@@ -11,7 +11,7 @@ exports.index = function (req, res) {
 //menampilkan semua riddle dan diurut berdasarkan tanggal
 exports.showallriddle = function (req, res) {
     connection.query(
-        'SELECT user_table.id_user, user_table.name, riddle_table.id_riddle, riddle_table.title, riddle_table.riddle_text FROM user_table JOIN riddle_table WHERE user_table.id_user=riddle_table.id_user_author ORDER BY riddle_table.date;', 
+        'SELECT user_table.id_user, user_table.name, riddle_table.id_riddle, riddle_table.title, riddle_table.riddle_text FROM user_table JOIN riddle_table WHERE user_table.id_user=riddle_table.id_user_author ORDER BY riddle_table.date DESC;', 
         function (error, rows, fields) {
             if (error) {
                 connection.log(error);
@@ -25,7 +25,7 @@ exports.showallriddle = function (req, res) {
 //menampilkan detail riddle berdasarkan id
 exports.showriddlebyid = function (req, res) {
     var id_riddle = req.body.id_riddle;
-    connection.query('SELECT user_table.id_user, user_table.name, user_table.img_profile, riddle_table.id_riddle, riddle_table.title, riddle_table.riddle_text, riddle_table.riddle_answer, riddle_table.date FROM user_table JOIN riddle_table WHERE user_table.id_user=riddle_table.id_user_author ORDER BY riddle_table.date;',
+    connection.query('SELECT user_table.id_user, user_table.name, user_table.img_profile, riddle_table.id_riddle, riddle_table.title, riddle_table.riddle_text, riddle_table.riddle_answer, riddle_table.date FROM user_table JOIN riddle_table ON user_table.id_user=riddle_table.id_user_author WHERE riddle_table.id_riddle=? ORDER BY riddle_table.date;', [id_riddle],
         function (error, rows, fields) {
             if (error) {
                 console.log(error);
