@@ -2,8 +2,18 @@
 
 exports.ok = function(values,res){
     var data = {
-        'status':200,
+        'succcess':true,
         'values':values
+    };
+
+    res.json(data);
+    res.end();
+};
+
+exports.gagal = function(errorMessage,res){
+    var data = {
+        'succcess':false,
+        'values':errorMessage
     };
 
     res.json(data);

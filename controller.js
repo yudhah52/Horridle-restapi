@@ -39,13 +39,15 @@ exports.showriddlebyid = function (req, res) {
 //menambahkan riddle
 exports.addriddle = function (req, res) {
     var now = new Date();
-    var today = now.getDate()+"/"+(now.getMonth()+1)+"/"+now.getFullYear();
+    var today = now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
 
     var id_user_author = req.body.id_user_author;
     var title = req.body.title;
     var riddle_text = req.body.riddle_text;
     var riddle_answer = req.body.riddle_answer;
     var date = today;
+    console.log(date);
+    console.log(today);
 
     connection.query(
         'INSERT INTO riddle_table (id_user_author,title,riddle_text,riddle_answer,date) VALUES(?,?,?,?,?)',
@@ -63,7 +65,7 @@ exports.addriddle = function (req, res) {
 //Edit riddle
 exports.editriddle = function (req, res) {
     var now = new Date();
-    var today = now.getDate()+"/"+(now.getMonth()+1)+"/"+now.getFullYear();
+    var today = now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
 
     var id_riddle = req.body.id_riddle;
     var title = req.body.title;
@@ -116,7 +118,7 @@ exports.userdetail = function (req, res) {
 //menampilkan user riddles
 exports.userriddles = function (req, res) {
     var id_user_author = req.body.id_user_author;
-    connection.query('SELECT *FROM riddle_table WHERE id_user_author = ?', [id_user_author],
+    connection.query('SELECT user_table.id_user, user_table.name, riddle_table.id_riddle, riddle_table.title, riddle_table.riddle_text FROM user_table JOIN riddle_table WHERE user_table.id_user=riddle_table.id_user_author AND riddle_table.id_user_author = ? ORDER BY riddle_table.date DESC;', [id_user_author],
         function (error, rows, fields) {
             if (error) {
                 console.log(error);
@@ -130,12 +132,12 @@ exports.userriddles = function (req, res) {
 //menambahkan comment
 exports.commentriddle = function (req, res) {
     var now = new Date();
-    var today = now.getDate()+"/"+(now.getMonth()+1)+"/"+now.getFullYear();
+    var today = now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
     
     var id_riddle = req.body.id_riddle;
     var id_user = req.body.id_user;
     var comment = req.body.comment;
-    var date = req.body.date;
+    var date = today;
 
     connection.query(
         'INSERT INTO comment_table (id_riddle,id_user,comment,date) VALUES(?,?,?,?)',
@@ -171,7 +173,7 @@ exports.deletecomment = function (req, res) {
 exports.riddlecomments = function (req, res) {
     var id_riddle = req.body.id_riddle;
 
-    connection.query('SELECT *FROM comment_table WHERE id_riddle = ?', [id_riddle],
+    connection.query('SELECT comment_table.id_comment, user_table.id_user, user_table.name, user_table.img_profile, comment_table.comment, comment_table.date FROM user_table JOIN comment_table WHERE user_table.id_user=comment_table.id_user AND comment_table.id_riddle = ? ORDER BY comment_table.date DESC', [id_riddle],
         function (error, rows, fields) {
             if (error) {
                 console.log(error);
