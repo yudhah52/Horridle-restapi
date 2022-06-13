@@ -118,7 +118,7 @@ exports.userdetail = function (req, res) {
 //menampilkan user riddles
 exports.userriddles = function (req, res) {
     var id_user_author = req.body.id_user_author;
-    connection.query('SELECT user_table.id_user, user_table.name, riddle_table.id_riddle, riddle_table.title, riddle_table.riddle_text FROM user_table JOIN riddle_table WHERE user_table.id_user=riddle_table.id_user_author AND riddle_table.id_user_author = ? ORDER BY riddle_table.date DESC;', [id_user_author],
+    connection.query('SELECT user_table.id_user, user_table.name, riddle_table.id_riddle, riddle_table.title, riddle_table.riddle_text, riddle_table.riddle_answer FROM user_table JOIN riddle_table WHERE user_table.id_user=riddle_table.id_user_author AND riddle_table.id_user_author = ? ORDER BY riddle_table.date DESC;', [id_user_author],
         function (error, rows, fields) {
             if (error) {
                 console.log(error);
