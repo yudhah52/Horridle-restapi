@@ -60,6 +60,18 @@ exports.addriddle = function (req, res) {
             }
         }
     );
+
+    connection.query(
+        'UPDATE user_table SET points = points + 30 where id_user = ?',
+        [id_user_author],
+        function (error, rows, fields) {
+            if (error) {
+                console.log(error);
+            } else {
+                response.ok('Berhasil menambahkan riddle!', res);
+            }
+        }
+    );
 };
 
 //Edit riddle
@@ -196,6 +208,21 @@ exports.editprofile = function(req, res) {
 
     connection.query('UPDATE user_table SET name=?, img_profile=?, email=?, password=? WHERE id_user=?',
     [name, img_profile, email, password, id_user],
+        function(error, rows, fields){
+            if(error){
+                console.log(error);
+            }else{
+                response.ok("Berhasil Ubah data", res);
+            }
+        });
+}
+
+// add points user biasa
+exports.addpoints = function(req, res) {
+    var id_user = req.body.id_user;
+
+    connection.query('UPDATE user_table SET points  = points + 10 where id_user = ?',
+    [id_user],
         function(error, rows, fields){
             if(error){
                 console.log(error);

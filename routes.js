@@ -41,6 +41,9 @@ module.exports = function(app){
     app.route('/edit-profile')
         .post(jsonku.editprofile);
 
+    app.route('/add-points')
+        .post(jsonku.addpoints);
+
     // app.route('/tampilmatakuliah')
     //     .post(jsonku.tampilgroupmatakuliah);
 };
