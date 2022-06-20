@@ -2,7 +2,8 @@
 
 var response = require('./res');
 var connection = require('./koneksi');
-var getRawBody = require('raw-body')
+var getRawBody = require('raw-body');
+const md5 = require('md5');
 
 exports.index = function (req, res) {
     response.ok("Aplikasi REST API berjalan", res);
@@ -60,18 +61,6 @@ exports.addriddle = function (req, res) {
             }
         }
     );
-
-    connection.query(
-        'UPDATE user_table SET points = points + 30 where id_user = ?',
-        [id_user_author],
-        function (error, rows, fields) {
-            if (error) {
-                console.log(error);
-            } else {
-                response.ok('Berhasil menambahkan riddle!', res);
-            }
-        }
-    );
 };
 
 //Edit riddle
@@ -121,7 +110,24 @@ exports.userdetail = function (req, res) {
             if (error) {
                 console.log(error);
             } else {
-                response.ok(rows, res);
+                response.ok(rows, res)
+                // console.log(rows);
+                // var result = {
+                //     "id_user":rows[0].id_user,
+                //     "name":rows[0].name,
+                //     "img_profile":rows[0].img_profile,
+                //     "email":rows[0].email,
+                //     "username":rows[0].username,
+                //     "password":rows[0].password,
+                //     "points":rows[0].points
+                // }
+                // var data = {
+                //     'succcess':true,
+                //     'values': result
+                // };
+            
+                // res.json(data);
+                // res.end();
             }
         }
     );
@@ -203,11 +209,14 @@ exports.editprofile = function(req, res) {
     var name = req.body.name;
     var img_profile = req.body.img_profile;
     var email = req.body.email;
-    // var username = req.body.username;
     var password = req.body.password;
-
-    connection.query('UPDATE user_table SET name=?, img_profile=?, email=?, password=? WHERE id_user=?',
-    [name, img_profile, email, password, id_user],
+    
+    var query = (password!="")?'UPDATE user_table SET name = ?, img_profile = ?, email = ?, password = ? WHERE id_user = ?':'UPDATE user_table SET name = ?, img_profile = ?, email = ? WHERE id_user = ?';
+    var list = (password!="")?[name, img_profile, email, md5(password), id_user]:[name, img_profile, email, id_user];
+    
+    connection.query(
+        query,
+        list,
         function(error, rows, fields){
             if(error){
                 console.log(error);
@@ -220,16 +229,19 @@ exports.editprofile = function(req, res) {
 // add points user biasa
 exports.addpoints = function(req, res) {
     var id_user = req.body.id_user;
+    var points = req.body.points;
 
-    connection.query('UPDATE user_table SET points  = points + 10 where id_user = ?',
-    [id_user],
-        function(error, rows, fields){
-            if(error){
+    connection.query(
+        'UPDATE user_table SET points = points + ? where id_user = ?',
+        [points,id_user],
+        function (error, rows, fields) {
+            if (error) {
                 console.log(error);
-            }else{
-                response.ok("Berhasil Ubah data", res);
+            } else {
+                response.ok('Berhasil Menambahkan Points!', res);
             }
-        });
+        }
+    );
 }
 
 // //menampilkan matakuliah group
