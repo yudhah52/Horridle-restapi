@@ -12,6 +12,7 @@ const { token } = require('morgan');
 exports.registration = function(req,res){
     var post = {
         img_profile : req.body.img_profile,
+        id_role : req.body.id_role,
         name : req.body.name,
         email : req.body.email,
         username : req.body.username,
@@ -37,10 +38,12 @@ exports.registration = function(req,res){
                     if(error){
                         console.log(error);
                     }else{
+                        console.log(rows);
                         var data = {
                             'succcess':true,
                             'values':"Berhasil menambahkan data user baru",
-                            'my_user_id':rows.insertId
+                            'my_user_id':rows.insertId,
+                            'my_role':post.id_role
                         };
                     
                         res.json(data);
@@ -70,11 +73,13 @@ exports.login = function(req,res){
             console.log(error)
         }else{
             if(rows.length == 1){
+                console.log(rows);
                 console.log(rows[0].id_user);
                 res.json({
                     success: true,
                     message: 'Berhasil login',
-                    my_user_id: rows[0].id_user
+                    my_user_id: rows[0].id_user,
+                    my_role: rows[0].id_role
                     // token: token,
                     // currUser: data.id_user
                 });
