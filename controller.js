@@ -111,23 +111,6 @@ exports.userdetail = function (req, res) {
                 console.log(error);
             } else {
                 response.ok(rows, res)
-                // console.log(rows);
-                // var result = {
-                //     "id_user":rows[0].id_user,
-                //     "name":rows[0].name,
-                //     "img_profile":rows[0].img_profile,
-                //     "email":rows[0].email,
-                //     "username":rows[0].username,
-                //     "password":rows[0].password,
-                //     "points":rows[0].points
-                // }
-                // var data = {
-                //     'succcess':true,
-                //     'values': result
-                // };
-            
-                // res.json(data);
-                // res.end();
             }
         }
     );
@@ -243,16 +226,3 @@ exports.addpoints = function(req, res) {
         }
     );
 }
-
-// //menampilkan matakuliah group
-// exports.tampilgroupmatakuliah = function(req,res){
-//     connection.query('SELECT mahasiswa.id_mahasiswa, mahasiswa.nim, mahasiswa.nama, mahasiswa.jurusan, matakuliah.matakuliah, matakuliah.sks FROM krs JOIN matakuliah JOIN mahasiswa WHERE krs.id_matakuliah = matakuliah.id_matakuliah AND krs.id_mahasiswa = mahasiswa.id_mahasiswa ORDER BY mahasiswa.id_mahasiswa;',
-//         function(error,rows,fields){
-//             if(error){
-//                 console.log(error);
-//             }else{
-//                 response.oknested(rows,res);
-//             }
-//         }
-//     )
-// };
